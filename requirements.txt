@@ -21,3 +21,4 @@ tifffile==2022.8.12
 torch==1.11.0
 tqdm==4.66.2
 tracker==0.1.1
+wandb>=0.15.0
