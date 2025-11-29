@@ -14,6 +14,7 @@ from swincell.trainer import run_training
 # from utils.data_utils import get_loader_Allen_tiff, folder_loader,folder_loader_cellpose
 from swincell.utils.data_utils import folder_loader
 from swincell.utils.utils import load_model
+from swincell.utils.zarr_dataset import metadata_zarr_loader
 # from uni_data_utils import get_loader_Allen_tiff
 
 from monai.inferers import sliding_window_inference
@@ -114,7 +115,10 @@ def main_worker(gpu, args):
     torch.backends.cudnn.benchmark = True
     args.test_mode = False
     # loader = get_loader_Allen_tiff(args)  # Loader for allencell dataset
-    loader = folder_loader(args)
+    if args.use_zarr_metadata:
+        loader = metadata_zarr_loader(args)
+    else:
+        loader = folder_loader(args)
     print(args.rank, " gpu", args.gpu)
     if args.rank == 0:
         print("Batch size is:", args.batch_size, "epochs", args.max_epochs)
