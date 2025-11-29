@@ -38,6 +38,28 @@ pip install swincell
 Note: The original colon dataset contains a private TIFF tag 65000 (0xFDE8) that is not recognized by standard TIFF reading libraries. To prevent continuous Warnings during model training, we provide a cleaned demo version of the dataset. You can download the updated dataset from the link below
 
 [Cleaned Colon Dataset](https://brookhavenlab-my.sharepoint.com/:u:/g/personal/xzhang4_bnl_gov/EaNWJnxUgYVFgzpE_du_VrEBUgJ-jyssLkklff3Ii8jZ8g?e=RONfch)
+## Experiment Tracking with Weights & Biases
+
+SwinCell supports Weights & Biases (Wandb) for experiment tracking. To enable Wandb logging, add the following arguments:
+
+- `--wandb_project`: Your Wandb project name (required)
+- `--wandb_entity`: Your Wandb entity/team (optional)
+- `--wandb_run_name`: Custom experiment name (optional)
+- `--wandb_mode`: `online`, `offline`, or `disabled` (default: `online`)
+
+Example:
+```bash
+python ./swincell/train_main.py \
+    --data_dir=<data_dir> \
+    --wandb_project=swincell_experiments \
+    --wandb_run_name=colon_dataset_v1 \
+    --model=swin \
+    --logdir=./results \
+    --max_epochs=3000
+```
+
+Wandb will automatically log training loss, validation metrics, learning rate, and images (if enabled). See `docs/zarr_metadata.md` for more details.
+
 ## Model training
 ### Model training with jupyter-notebook
 1. add the SwinCell environment as a new kernel to your Jupyter Notebook: 
